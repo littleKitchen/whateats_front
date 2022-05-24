@@ -1,4 +1,10 @@
 <template>
+  <div class="geolocation">
+    <h1>Current location is:</h1>
+    <h2>Longitude:{{ formMess.longitude }}</h2>
+    <h2>Latitude:{{ formMess.latitude }}</h2>
+  </div>
+
   <form v-on:submit.prevent="submit()">
     <input
       placeholder="Radius"
@@ -28,9 +34,8 @@ export default {
   methods: {
     submit() {
       axios({
-        baseURL: "http://localhost:3000/",
+        baseURL: "http://localhost:3000/main/getResult",
         method: "get",
-        url: "main/getResult",
         data: this.formMess,
       }).then((res) => {
         console.log(res);
