@@ -14,6 +14,11 @@
     />
     <button type="submit" class="ui-button"><span>Submit</span></button>
   </form>
+    <div class="result">
+    <h1> The Result is:</h1>
+    <h2>{{ formMess.rename }}</h2>
+    <img v-bind:src="formMess.image_url" />
+  </div>
 </template>
 
 <script>
@@ -28,18 +33,18 @@ export default {
         radius: "",
         latitude: "",
         longitude: "",
+        rename: "",
+        image_url: ""
       },
     };
   },
   methods: {
     submit() {
-      axios({
-        baseURL: "http://localhost:3000/main/getResult",
-        method: "get",
-        data: this.formMess,
-      }).then((res) => {
-        console.log(res);
+      axios.get(`http://localhost:3001/main/getResult?latitude=${this.formMess.latitude}&longitude=${this.formMess.longitude}&radius=${this.formMess.radius}`).then((response) => {
+        this.formMess.rename = response.data.name;
+        this.formMess.image_url = response.data.image_url;
       });
+
     },
   },
   mounted: function () {
